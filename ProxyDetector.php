@@ -26,8 +26,12 @@ class ProxyDetector
     }
 
     public function setIp($ip) {
-        // @todo: validate ip
-        return $this->_ip = trim($ip);
+
+        if(!filter_var($ip, FILTER_VALIDATE_IP)) {
+            throw new InvalidArgumentException('This is not a valid IP address ('. $ip .').');
+        }
+
+        return $this->_ip = $ip;
     }
 
     public function getIp()

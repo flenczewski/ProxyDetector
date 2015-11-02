@@ -23,7 +23,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
             array('127.0.0'),
             array('127.0.0.1.'),
             array('test'),
-            array(null)
+            array('')
         );
     }
 
@@ -52,6 +52,15 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      */
     public function testSetIpErr1($ip)
+    {
+        $pd = new ProxyDetector($ip);
+    }
+
+    /**
+     * @dataProvider providerIpErr
+     * @expectedException InvalidArgumentException
+     */
+    public function testSetIpErr2($ip)
     {
         $pd = new ProxyDetector();
         $pd->setIp($ip);
