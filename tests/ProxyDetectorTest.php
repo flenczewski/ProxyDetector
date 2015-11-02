@@ -27,6 +27,13 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function providerHostnameProxyOk()
+    {
+        return array(
+            array('proxy.org')
+        );
+    }
+
     /**
      * @dataProvider providerIpOk
      */
@@ -49,7 +56,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIpErr
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testSetIpErr1($ip)
     {
@@ -58,11 +65,23 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider providerIpErr
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testSetIpErr2($ip)
     {
         $pd = new ProxyDetector();
         $pd->setIp($ip);
     }
+
+    /**
+     * @dataProvider providerHostnameProxyOk
+     * @expectedException \Exception
+     */
+    public function testCheckHostnameOk($hostname)
+    {
+        $pd = new ProxyDetector();
+        $pd->checkHostname($hostname, $pd->proxyString);
+    }
+
+
 }
