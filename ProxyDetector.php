@@ -82,20 +82,15 @@ class ProxyDetector
      * Check proxy string in hostname
      *
      * @param null $hostname
-     * @param array|null $proxyString
      * @throws Exception
      */
-    public function checkHostname($hostname = null, array $proxyString = null) {
+    public function checkHostname($hostname = null) {
 
         if(null === $hostname) {
             $hostname = gethostbyaddr($this->getIp());
         }
 
-        if(null === $proxyString) {
-            $proxyString = $this->proxyHostnameString;
-        }
-
-        foreach($proxyString as $proxyString) {
+        foreach($this->proxyHostnameString as $proxyString) {
             if( false !== strripos($hostname, $proxyString) ) {
                 throw new \Exception('Proxy founded. Hostname: '. $hostname);
             }
