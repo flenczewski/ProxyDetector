@@ -21,26 +21,6 @@ class ProxyDetector
     public $proxyHostnameString = ['proxy'];
 
     /**
-     * proxy http headers
-     * @var array
-     */
-    public $proxyHttpHeaders = ['HTTP_VIA',
-                                'HTTP_X_FORWARDED_FOR',
-                                'HTTP_FORWARDED_FOR',
-                                'HTTP_X_FORWARDED',
-                                'HTTP_FORWARDED',
-                                'HTTP_CLIENT_IP',
-                                'HTTP_FORWARDED_FOR_IP',
-                                'VIA',
-                                'X_FORWARDED_FOR',
-                                'FORWARDED_FOR',
-                                'X_FORWARDED',
-                                'FORWARDED',
-                                'CLIENT_IP',
-                                'FORWARDED_FOR_IP',
-                                'HTTP_PROXY_CONNECTION'];
-
-    /**
      * ProxyDetector constructor.
      * @param string $ip - IP address to verify
      */
@@ -87,8 +67,6 @@ class ProxyDetector
 
         try {
             $this->checkHostname();
-            $this->checkServerArray();
-            // @todo: _SERVER
             // @todo: TOR exit nodes
             // @todo: proxy lists
         } catch (\Exception $e) {
@@ -122,20 +100,6 @@ class ProxyDetector
                 throw new \Exception('Proxy founded. Hostname: '. $hostname);
             }
         }
-    }
-
-    public function checkServerArray(array $serverArray = null)
-    {
-        if(php_sapi_name() !== 'cli') {
-            $serverArray = $_SERVER;
-        }
-
-        foreach($this->proxyHttpHeaders as $httpHeader) {
-            if(array_key_exists($httpHeader, $serverArray)) {
-                throw new \Exception('Proxy founded. Http header ('. $httpHeader .'='. $serverArray[$httpHeader] .')');
-            }
-        }
-
     }
 
 
