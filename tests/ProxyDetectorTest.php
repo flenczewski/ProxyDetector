@@ -26,6 +26,12 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
             array('')
         );
     }
+    public function providerHostnameProxyOk()
+    {
+        return array(
+            array('proxy.org')
+        );
+    }
 
     /**
      * @dataProvider providerIpOk
@@ -75,6 +81,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
         $pd = new ProxyDetector();
         $pd->checkHostname($hostname, $pd->proxyHostnameString);
     }
+
 
 
 }
