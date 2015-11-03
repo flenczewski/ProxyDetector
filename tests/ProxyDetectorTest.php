@@ -27,13 +27,6 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function providerHostnameProxyOk()
-    {
-        return array(
-            array('proxy.org')
-        );
-    }
-
     /**
      * @dataProvider providerIpOk
      */
