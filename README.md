@@ -1,10 +1,11 @@
 # ProxyDetector
 
 * Analyze hostname for "proxy" string :)
+* Analyze proxy lists file
 
 @TODO:
 * Tor exit nodes
-* Import and analyze proxy lists
+* Import proxy lists
 
 ```php
 <?php
