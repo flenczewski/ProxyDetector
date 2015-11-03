@@ -111,7 +111,8 @@ class ProxyDetector
         $proxyList = file($proxyFile);
 
         foreach($proxyList as $proxyIp) {
-            if(trim($proxyIp) === $this->getIp()) {
+            list($ip) = explode(':', trim($proxyIp));
+            if($ip === $this->getIp()) {
                 $this->_setMessage(self::CODE_PROXYLIST, 'Proxy founded in proxy list: '. $proxyIp);
                 break;
             }
