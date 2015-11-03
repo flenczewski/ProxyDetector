@@ -79,16 +79,23 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
     {
         $pd = new \ProxyDetector\ProxyDetector();
         $pd->checkHostname($hostname);
-        print_r($pd->getMessageList());
+        $this->assertEquals(count($pd->getMessageList()), 1);
     }
 
     public function testCheckProxyListOk()
     {
         $pd = new \ProxyDetector\ProxyDetector('164.125.38.115');
         $pd->checkProxyList();
-        print_r($pd->getMessageList());
+        $this->assertEquals(count($pd->getMessageList()), 1);
     }
 
+    public function testIsProxyOk()
+    {
+        $pd = new \ProxyDetector\ProxyDetector('164.125.38.115');
+        $result = $pd->isProxy();
+
+        $this->assertTrue($result);
+    }
 
 
 }
