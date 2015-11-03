@@ -5,6 +5,7 @@
  * Date: 2015-11-02
  * Time: 22:47
  */
+namespace ProxyDetector;
 
 class ProxyDetector
 {
@@ -18,7 +19,17 @@ class ProxyDetector
      * Potential hostname string
      * @var array
      */
-    public $proxyHostnameString = ['proxy'];
+    public $proxyHostnameString = ['proxy', 'proxi'];
+
+    /**
+     * Message list from checker
+     * @var array
+     */
+    private $_message = [];
+
+    const CODE_HOSTNAME  = 1;
+    const CODE_PROXYLIST = 2;
+    const CODE_TOR       = 3;
 
     /**
      * ProxyDetector constructor.
@@ -63,18 +74,11 @@ class ProxyDetector
      */
     public function isProxy()
     {
-        $result = false;
+        $this->checkHostname();
+        $this->checkProxyList();
+        // @todo: TOR exit nodes
 
-        try {
-            $this->checkHostname();
-            // @todo: TOR exit nodes
-            // @todo: proxy lists
-        } catch (\Exception $e) {
-            $this->messages[] = $e->getMessage();
-            $result = true;
-        }
-
-        return $result;
+        return count($this->_message) > 0 ? true : false;
     }
 
 
@@ -92,10 +96,46 @@ class ProxyDetector
 
         foreach($this->proxyHostnameString as $proxyString) {
             if( false !== strripos($hostname, $proxyString) ) {
-                throw new \Exception('Proxy founded. Hostname: '. $hostname);
+                $this->_setMessage(self::CODE_HOSTNAME, 'Proxy founded. Hostname: '. $hostname);
+                break;
             }
         }
     }
 
+    /**
+     * Search ip address in proxy file list
+     */
+    public function checkProxyList()
+    {
+        $proxyFile = __DIR__ .'/data/proxy-list.txt';
+        $proxyList = file($proxyFile);
 
+        foreach($proxyList as $proxyIp) {
+            if(trim($proxyIp) === $this->getIp()) {
+                $this->_setMessage(self::CODE_PROXYLIST, 'Proxy founded in proxy list: '. $proxyIp);
+                break;
+            }
+        }
+    }
+
+    /**
+     * setter for chcecker message
+     *
+     * @param int $code - method code (hostname, proxylist, tor)
+     * @param string $message -
+     */
+    private function _setMessage($code, $message)
+    {
+        $this->_message[$code] = $message;
+    }
+
+    /**
+     * Get all messages
+     *
+     * @return array message list
+     */
+    public function getMessageList()
+    {
+        return $this->_message;
+    }
 }

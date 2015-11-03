@@ -38,7 +38,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetIpOk1($ip)
     {
-        $pd = new ProxyDetector($ip);
+        $pd = new \ProxyDetector\ProxyDetector($ip);
         $this->assertEquals( $pd->getIp(), $ip  );
     }
 
@@ -47,7 +47,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetIpOk2($ip)
     {
-        $pd = new ProxyDetector();
+        $pd = new \ProxyDetector\ProxyDetector();
         $pd->setIp($ip);
 
         $this->assertEquals( $pd->getIp(), $ip  );
@@ -59,7 +59,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetIpErr1($ip)
     {
-        $pd = new ProxyDetector($ip);
+        $pd = new \ProxyDetector\ProxyDetector($ip);
     }
 
     /**
@@ -68,18 +68,25 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetIpErr2($ip)
     {
-        $pd = new ProxyDetector();
+        $pd = new \ProxyDetector\ProxyDetector();
         $pd->setIp($ip);
     }
 
     /**
      * @dataProvider providerHostnameProxyOk
-     * @expectedException \Exception
      */
     public function testCheckHostnameOk($hostname)
     {
-        $pd = new ProxyDetector();
+        $pd = new \ProxyDetector\ProxyDetector();
         $pd->checkHostname($hostname);
+        print_r($pd->getMessageList());
+    }
+
+    public function testCheckProxyListOk()
+    {
+        $pd = new \ProxyDetector\ProxyDetector('164.125.38.115');
+        $pd->checkProxyList();
+        print_r($pd->getMessageList());
     }
 
 
