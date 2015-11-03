@@ -18,7 +18,7 @@ class ProxyDetector
      * Potential hostname string
      * @var array
      */
-    public $proxyString = ['proxy'];
+    public $proxyHostnameString = ['proxy'];
 
     /**
      * ProxyDetector constructor.
@@ -93,7 +93,7 @@ class ProxyDetector
         }
 
         if(null === $proxyString) {
-            $proxyString = $this->proxyString;
+            $proxyString = $this->proxyHostnameString;
         }
 
         foreach($proxyString as $proxyString) {

@@ -80,7 +80,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
     public function testCheckHostnameOk($hostname)
     {
         $pd = new ProxyDetector();
-        $pd->checkHostname($hostname, $pd->proxyString);
+        $pd->checkHostname($hostname, $pd->proxyHostnameString);
     }
 
 
