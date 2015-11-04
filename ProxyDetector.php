@@ -74,7 +74,7 @@ class ProxyDetector
      */
     public function isProxy()
     {
-        $this->checkHostname();
+        //$this->checkHostname();
         $this->checkProxyList();
         // @todo: TOR exit nodes
 
