@@ -69,7 +69,7 @@ class ProxyDetector
         }
 
         $this->checkProxyList();
-        // @todo: TOR exit nodes
+        $this->checkTorExitNode();
 
         return count($this->_message) > 0 ? true : false;
     }
@@ -84,6 +84,18 @@ class ProxyDetector
 
         if(strpos($proxyString, $this->getIp())) {
             $this->_setMessage(self::CODE_PROXYLIST, 'Proxy founded in proxy list: '. $this->getIp());
+        }
+    }
+
+    /**
+     * Search ip address in tor exit nodes
+     */
+    public function checkTorExitNode()
+    {
+        $proxyString = file_get_contents(__DIR__ .'/data/tor-ip.txt', FILE_USE_INCLUDE_PATH);
+
+        if(strpos($proxyString, $this->getIp())) {
+            $this->_setMessage(self::CODE_PROXYLIST, 'Proxy founded in tor exit nodes list: '. $this->getIp());
         }
     }
 

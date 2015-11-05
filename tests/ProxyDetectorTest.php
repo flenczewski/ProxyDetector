@@ -57,10 +57,26 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($pd->getMessageList()), 1);
     }
 
-    public function testIsProxyOk()
+    public function testCheckTorExitNodeOk()
+    {
+        $pd = new \ProxyDetector\ProxyDetector();
+        $pd->setIp('223.27.33.202');
+        $pd->checkTorExitNode();
+        $this->assertEquals(count($pd->getMessageList()), 1);
+    }
+
+    public function testIsProxyOk1()
     {
         $pd = new \ProxyDetector\ProxyDetector();
         $result = $pd->isProxy('98.142.192.236');
+
+        $this->assertTrue($result);
+    }
+
+    public function testIsProxyOk2()
+    {
+        $pd = new \ProxyDetector\ProxyDetector();
+        $result = $pd->isProxy('223.27.33.202');
 
         $this->assertTrue($result);
     }
