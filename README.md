@@ -1,9 +1,9 @@
 # ProxyDetector
 
-* Analyze proxy lists file
+* Analyze proxy list file
+* Analyze Tor exit nodes list
 
 @TODO:
-* Tor exit nodes
 * Import proxy lists (proxy, tor)
 
 ```php
