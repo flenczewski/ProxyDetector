@@ -27,19 +27,14 @@ class ProxyDetector
      */
     private $_message = [];
 
-    const CODE_HOSTNAME  = 1;
-    const CODE_PROXYLIST = 2;
-    const CODE_TOR       = 3;
+    const CODE_PROXYLIST = 1;
+    const CODE_TOR       = 2;
 
     /**
      * ProxyDetector constructor.
-     * @param string $ip - IP address to verify
      */
-    public function __construct($ip = null)
+    public function __construct()
     {
-        if(null !== $ip) {
-            $this->setIp($ip);
-        }
     }
 
     /**
@@ -48,8 +43,8 @@ class ProxyDetector
      * @param string $ip - IP address to verify
      * @return mixed
      */
-    public function setIp($ip) {
-
+    public function setIp($ip)
+    {
         if(!filter_var($ip, FILTER_VALIDATE_IP)) {
             throw new \InvalidArgumentException('This is not a valid IP address ('. $ip .').');
         }
@@ -70,37 +65,21 @@ class ProxyDetector
     /**
      * Check IP address
      *
+     * @param string $ip - IP address to verify
      * @return bool
      */
-    public function isProxy()
+    public function isProxy($ip = null)
     {
-        //$this->checkHostname();
+        if(null !== $ip) {
+            $this->setIp($ip);
+        }
+
         $this->checkProxyList();
         // @todo: TOR exit nodes
 
         return count($this->_message) > 0 ? true : false;
     }
 
-
-    /**
-     * Check proxy string in hostname
-     *
-     * @param null $hostname
-     * @throws Exception
-     */
-    public function checkHostname($hostname = null) {
-
-        if(null === $hostname) {
-            $hostname = gethostbyaddr($this->getIp());
-        }
-
-        foreach($this->proxyHostnameString as $proxyString) {
-            if( false !== strripos($hostname, $proxyString) ) {
-                $this->_setMessage(self::CODE_HOSTNAME, 'Proxy founded. Hostname: '. $hostname);
-                break;
-            }
-        }
-    }
 
     /**
      * Search ip address in proxy file list

@@ -26,26 +26,11 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
             array('')
         );
     }
-    public function providerHostnameProxyOk()
-    {
-        return array(
-            array('proxy.org')
-        );
-    }
 
     /**
      * @dataProvider providerIpOk
      */
-    public function testSetIpOk1($ip)
-    {
-        $pd = new \ProxyDetector\ProxyDetector($ip);
-        $this->assertEquals( $pd->getIp(), $ip  );
-    }
-
-    /**
-     * @dataProvider providerIpOk
-     */
-    public function testSetIpOk2($ip)
+    public function testSetIpOk($ip)
     {
         $pd = new \ProxyDetector\ProxyDetector();
         $pd->setIp($ip);
@@ -57,42 +42,24 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
      * @dataProvider providerIpErr
      * @expectedException \InvalidArgumentException
      */
-    public function testSetIpErr1($ip)
-    {
-        $pd = new \ProxyDetector\ProxyDetector($ip);
-    }
-
-    /**
-     * @dataProvider providerIpErr
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSetIpErr2($ip)
+    public function testSetIpErr($ip)
     {
         $pd = new \ProxyDetector\ProxyDetector();
         $pd->setIp($ip);
-    }
-
-    /**
-     * @dataProvider providerHostnameProxyOk
-     */
-    public function testCheckHostnameOk($hostname)
-    {
-        $pd = new \ProxyDetector\ProxyDetector();
-        $pd->checkHostname($hostname);
-        $this->assertEquals(count($pd->getMessageList()), 1);
     }
 
     public function testCheckProxyListOk()
     {
-        $pd = new \ProxyDetector\ProxyDetector('164.125.38.115');
+        $pd = new \ProxyDetector\ProxyDetector();
+        $pd->setIp('164.125.38.115');
         $pd->checkProxyList();
         $this->assertEquals(count($pd->getMessageList()), 1);
     }
 
     public function testIsProxyOk()
     {
-        $pd = new \ProxyDetector\ProxyDetector('164.125.38.115');
-        $result = $pd->isProxy();
+        $pd = new \ProxyDetector\ProxyDetector();
+        $result = $pd->isProxy('164.125.38.115');
 
         $this->assertTrue($result);
     }

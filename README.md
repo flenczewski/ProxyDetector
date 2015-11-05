@@ -1,19 +1,19 @@
 # ProxyDetector
 
-* Analyze hostname for "proxy" string :)
 * Analyze proxy lists file
 
 @TODO:
 * Tor exit nodes
-* Import proxy lists
+* Import proxy lists (proxy, tor)
 
 ```php
 <?php
 include_once 'ProxyDetector.php';
-$pd = new \ProxyDetector\ProxyDetector('164.125.38.115');
-if($pd->isProxy()) {
+
+$pd = new \ProxyDetector\ProxyDetector();
+if($pd->isProxy('164.125.38.115')) {
     // you use proxy
 } else {
-    // normal IPS
+    // normal ISP
 }
 ```
