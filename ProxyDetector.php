@@ -53,7 +53,32 @@ class ProxyDetector
      */
     public function getIp()
     {
+        if(!$this->_ip) {
+            throw new \InvalidArgumentException('Set the IP address first.');
+        }
+
         return $this->_ip;
+    }
+
+    /**
+     * setter for checker message
+     *
+     * @param int $code - method code (hostname, proxylist, tor)
+     * @param string $message -
+     */
+    private function _setMessage($code, $message)
+    {
+        $this->_message[$code] = $message;
+    }
+
+    /**
+     * Get all messages
+     *
+     * @return array message list
+     */
+    public function getMessageList()
+    {
+        return $this->_message;
     }
 
     /**
@@ -99,24 +124,4 @@ class ProxyDetector
         }
     }
 
-    /**
-     * setter for checker message
-     *
-     * @param int $code - method code (hostname, proxylist, tor)
-     * @param string $message -
-     */
-    private function _setMessage($code, $message)
-    {
-        $this->_message[$code] = $message;
-    }
-
-    /**
-     * Get all messages
-     *
-     * @return array message list
-     */
-    public function getMessageList()
-    {
-        return $this->_message;
-    }
 }
