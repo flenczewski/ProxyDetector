@@ -95,7 +95,7 @@ class ProxyDetector
         $proxyString = file_get_contents(__DIR__ .'/data/tor-ip.txt', FILE_USE_INCLUDE_PATH);
 
         if(strpos($proxyString, $this->getIp())) {
-            $this->_setMessage(self::CODE_PROXYLIST, 'Proxy founded in tor exit nodes list: '. $this->getIp());
+            $this->_setMessage(self::CODE_TOR, 'Proxy founded in tor exit nodes list: '. $this->getIp());
         }
     }
 

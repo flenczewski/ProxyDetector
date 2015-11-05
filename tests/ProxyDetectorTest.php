@@ -81,5 +81,12 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    public function testIsProxyErr()
+    {
+        $pd = new \ProxyDetector\ProxyDetector();
+        $result = $pd->isProxy();
+
+        $this->assertFalse($result);
+    }
 
 }
