@@ -16,12 +16,6 @@ class ProxyDetector
     private $_ip = null;
 
     /**
-     * Potential hostname string
-     * @var array
-     */
-    public $proxyHostnameString = ['proxy', 'proxi'];
-
-    /**
      * Message list from checker
      * @var array
      */
@@ -82,24 +76,19 @@ class ProxyDetector
 
 
     /**
-     * Search ip address in proxy file list
+     * Search ip address in proxy list file
      */
     public function checkProxyList()
     {
-        $proxyFile = __DIR__ .'/data/proxy-list.txt';
-        $proxyList = file($proxyFile);
+        $proxyString = file_get_contents(__DIR__ .'/data/proxy-list.txt', FILE_USE_INCLUDE_PATH);
 
-        foreach($proxyList as $proxyIp) {
-            list($ip) = explode(':', trim($proxyIp));
-            if($ip === $this->getIp()) {
-                $this->_setMessage(self::CODE_PROXYLIST, 'Proxy founded in proxy list: '. $proxyIp);
-                break;
-            }
+        if(strpos($proxyString, $this->getIp())) {
+            $this->_setMessage(self::CODE_PROXYLIST, 'Proxy founded in proxy list: '. $this->getIp());
         }
     }
 
     /**
-     * setter for chcecker message
+     * setter for checker message
      *
      * @param int $code - method code (hostname, proxylist, tor)
      * @param string $message -

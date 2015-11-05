@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Los_Angeles');
 include_once '../ProxyDetector.php';
 /**
  * Created by PhpStorm.
@@ -51,7 +52,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
     public function testCheckProxyListOk()
     {
         $pd = new \ProxyDetector\ProxyDetector();
-        $pd->setIp('164.125.38.115');
+        $pd->setIp('98.142.192.236');
         $pd->checkProxyList();
         $this->assertEquals(count($pd->getMessageList()), 1);
     }
@@ -59,7 +60,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
     public function testIsProxyOk()
     {
         $pd = new \ProxyDetector\ProxyDetector();
-        $result = $pd->isProxy('164.125.38.115');
+        $result = $pd->isProxy('98.142.192.236');
 
         $this->assertTrue($result);
     }
