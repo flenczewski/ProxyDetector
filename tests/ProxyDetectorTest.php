@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set('America/Los_Angeles');
-include_once '../ProxyDetector.php';
+include_once '../Detector.php';
 /**
  * Created by PhpStorm.
  * User: fabian.lenczewski
@@ -33,7 +33,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetIpOk($ip)
     {
-        $pd = new \ProxyDetector\ProxyDetector();
+        $pd = new \ProxyDetector\Detector();
         $pd->setIp($ip);
 
         $this->assertEquals( $pd->getIp(), $ip  );
@@ -45,13 +45,13 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetIpErr($ip)
     {
-        $pd = new \ProxyDetector\ProxyDetector();
+        $pd = new \ProxyDetector\Detector();
         $pd->setIp($ip);
     }
 
     public function testCheckProxyListOk()
     {
-        $pd = new \ProxyDetector\ProxyDetector();
+        $pd = new \ProxyDetector\Detector();
         $pd->setIp('98.142.192.236');
         $pd->checkProxyList();
         $this->assertEquals(count($pd->getMessageList()), 1);
@@ -59,7 +59,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckTorExitNodeOk()
     {
-        $pd = new \ProxyDetector\ProxyDetector();
+        $pd = new \ProxyDetector\Detector();
         $pd->setIp('223.27.33.202');
         $pd->checkTorExitNode();
         $this->assertEquals(count($pd->getMessageList()), 1);
@@ -67,7 +67,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
 
     public function testIsProxyOk1()
     {
-        $pd = new \ProxyDetector\ProxyDetector();
+        $pd = new \ProxyDetector\Detector();
         $result = $pd->isProxy('98.142.192.236');
 
         $this->assertTrue($result);
@@ -75,7 +75,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
 
     public function testIsProxyOk2()
     {
-        $pd = new \ProxyDetector\ProxyDetector();
+        $pd = new \ProxyDetector\Detector();
         $result = $pd->isProxy('223.27.33.202');
 
         $this->assertTrue($result);
@@ -86,7 +86,7 @@ class ProxyDetectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsProxyErr()
     {
-        $pd = new \ProxyDetector\ProxyDetector();
+        $pd = new \ProxyDetector\Detector();
         $pd->isProxy();
     }
 

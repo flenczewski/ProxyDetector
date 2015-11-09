@@ -10,7 +10,7 @@
 <?php
 include_once 'ProxyDetector.php';
 
-$pd = new \ProxyDetector\ProxyDetector();
+$pd = new \ProxyDetector\Detector();
 if($pd->isProxy('164.125.38.115')) {
     // you use proxy
 } else {

@@ -7,7 +7,7 @@
  */
 namespace ProxyDetector;
 
-class ProxyDetector
+class Detector
 {
     /**
      * IP address to verify
