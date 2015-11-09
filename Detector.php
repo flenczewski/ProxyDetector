@@ -10,10 +10,10 @@ namespace ProxyDetector;
 class Detector
 {
     /**
-     * IP address to verify
+     * IP address to verify (normal and hex)
      * @var null
      */
-    private $_ip = null;
+    private $_ip, $_ipHex = null;
 
     /**
      * Message list from checker
@@ -23,6 +23,8 @@ class Detector
 
     const CODE_PROXYLIST = 1;
     const CODE_TOR       = 2;
+
+    const SEPARATOR = 'o';
 
     /**
      * ProxyDetector constructor.
@@ -58,6 +60,23 @@ class Detector
         }
 
         return $this->_ip;
+    }
+
+    /**
+     * Get encoded IP address (hex with separators)
+     *
+     * @return string
+     */
+    public function getIpHex()
+    {
+        $parts = explode('.', $this->getIp());
+
+        $this->_ipHex = null;
+        for ($i = 0; $i < 4; $i++) {
+            $this->_ipHex .= str_pad(dechex($parts[$i]), 2, '0', STR_PAD_LEFT);
+        }
+
+        return self::SEPARATOR . $this->_ipHex . self::SEPARATOR;
     }
 
     /**
@@ -107,7 +126,7 @@ class Detector
     {
         $proxyString = file_get_contents(__DIR__ .'/data/proxy-list.txt', FILE_USE_INCLUDE_PATH);
 
-        if(strpos($proxyString, $this->getIp())) {
+        if(strpos($proxyString, $this->getIpHex())) {
             $this->_setMessage(self::CODE_PROXYLIST, 'Proxy founded in proxy list: '. $this->getIp());
         }
     }
@@ -119,7 +138,7 @@ class Detector
     {
         $proxyString = file_get_contents(__DIR__ .'/data/tor-ip.txt', FILE_USE_INCLUDE_PATH);
 
-        if(strpos($proxyString, $this->getIp())) {
+        if(strpos($proxyString, $this->getIpHex())) {
             $this->_setMessage(self::CODE_TOR, 'Proxy founded in tor exit nodes list: '. $this->getIp());
         }
     }
