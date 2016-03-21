@@ -76,7 +76,7 @@ class Detector
             $this->_ipHex .= str_pad(dechex($parts[$i]), 2, '0', STR_PAD_LEFT);
         }
 
-        return self::SEPARATOR . $this->_ipHex . self::SEPARATOR;
+        return static::SEPARATOR . $this->_ipHex . static::SEPARATOR;
     }
 
     /**
@@ -115,7 +115,7 @@ class Detector
         $this->checkProxyList();
         $this->checkTorExitNode();
 
-        return count($this->_message) > 0 ? true : false;
+        return count($this->_message) > 0;
     }
 
 
@@ -127,7 +127,7 @@ class Detector
         $proxyString = file_get_contents(__DIR__ .'/data/proxy-list.txt', FILE_USE_INCLUDE_PATH);
 
         if(strpos($proxyString, $this->getIpHex())) {
-            $this->_setMessage(self::CODE_PROXYLIST, 'Proxy founded in proxy list: '. $this->getIp());
+            $this->_setMessage(static::CODE_PROXYLIST, 'Proxy founded in proxy list: '. $this->getIp());
         }
     }
 
@@ -139,7 +139,7 @@ class Detector
         $proxyString = file_get_contents(__DIR__ .'/data/tor-ip.txt', FILE_USE_INCLUDE_PATH);
 
         if(strpos($proxyString, $this->getIpHex())) {
-            $this->_setMessage(self::CODE_TOR, 'Proxy founded in tor exit nodes list: '. $this->getIp());
+            $this->_setMessage(static::CODE_TOR, 'Proxy founded in tor exit nodes list: '. $this->getIp());
         }
     }
 
