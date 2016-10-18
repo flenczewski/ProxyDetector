@@ -1,4 +1,6 @@
-# ProxyDetector
+# ProxyDetector 
+
+Proxy Detector / Proxy Detection
 
 * Analyze proxy list file
 * Analyze Tor exit nodes list
